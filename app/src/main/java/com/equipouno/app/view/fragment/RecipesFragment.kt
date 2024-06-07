@@ -1,5 +1,6 @@
 package com.equipouno.app.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -51,7 +52,12 @@ class RecipesFragment : Fragment() {
 
     private fun listeners() {
         binding.profileButton.setOnClickListener {
-            findNavController().navigate(R.id.action_recipesFragment_to_profileFragment)
+            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+            val email = sharedPref?.getString("user_email", null)
+            val bundle = Bundle().apply {
+                putString("email", email)
+            }
+            findNavController().navigate(R.id.action_recipesFragment_to_profileFragment, bundle)
         }
 
         binding.logOut.setOnClickListener {
